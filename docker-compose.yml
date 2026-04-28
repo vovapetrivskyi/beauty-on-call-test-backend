@@ -1,0 +1,16 @@
+version: '3.9'
+ 
+services:
+  backend:
+    build:
+      context: ./backend
+      target: builder          # dev stage — includes devDeps для nest watch
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+    volumes:
+      - ./backend/src:/app/src # hot-reload: змінюємо src — nest перезапускає
+    command: npm run start:dev
+    restart: unless-stopped
